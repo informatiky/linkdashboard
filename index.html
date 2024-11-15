@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="public/favicon.png" type="image/x-icon">
+    <title>AICS Link Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f0f2f5;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0 0 0;
+            font-size: 3rem;
+        }
+        h2 {
+            text-align: center;
+            margin: 30px;
+            font-size: 1rem;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            text-align: center;
+            color: #dc3545;
+            padding: 1rem;
+            margin: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h1>AICS Web</h1>
+<h2>A collection of links for students and their projects.</h2>
+<div class="dashboard">
+    <div class="grid" id="linkGrid"></div>
+</div>
+
+<script>
+    function createLinkCard(link) {
+        return `
+                <div class="card">
+                    <a href="${link.url}" target="_blank"><img src="${link.image}" alt="${link.title}"></a>
+                    <div class="card-content">
+                        <h3>${link.title}</h3>
+                        <p>${link.description}</p>
+                        <a href="${link.url}" target="_blank">Visit Site →</a>
+                    </div>
+                </div>
+            `;
+    }
+
+    function renderLinks(yamlContent) {
+        try {
+            const data = jsyaml.load(yamlContent);
+            const grid = document.getElementById('linkGrid');
+            grid.innerHTML = data.links.map(link => createLinkCard(link)).join('');
+        } catch (e) {
+            document.getElementById('linkGrid').innerHTML = `
+                    <div class="error-message">
+                        Error loading links: ${e.message}
+                    </div>
+                `;
+        }
+    }
+
+    // Load YAML content
+    async function loadYamlContent() {
+        try {
+            const response = await fetch('links.yml');
+            const yamlContent = await response.text();
+            renderLinks(yamlContent);
+        } catch (e) {
+            document.getElementById('linkGrid').innerHTML = `
+                    <div class="error-message">
+                        Error loading YAML file: ${e.message}
+                    </div>
+                `;
+        }
+    }
+
+    // Initialize
+    loadYamlContent();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+links:
+  - title: Student Dashboard
+    description: Up-to-date information for students about clubs and events maintained by the Student Council
+    url: https://dash.aics.app
+    image: https://aics.espritscholen.nl/typo3conf/ext/espritscholen/Resources/Public/Images/Logos/AICS-logo.png
+
+  - title: SandcastleWeb
+    description: A website to help students, teachers and visitors find their way through the AICS Sandcastle building
+    url: https://sandcastle.aics.app/
+    image: https://sandcastle.aics.app/assets/scaics.jpg
+
+  - title: Library Website
+    description: Resources for students and teachers regarding books, citations and research
+    url: https://library.aics.app
+    image: public/library.jpg
