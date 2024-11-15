@@ -1,6 +1,6 @@
 # Link Dashboard
 
-This simple HTML CSS and Javascript LinkBoard is used to show different online projects at my school. Feel free to clone it and change the links to refelct your needs.
+This simple HTML CSS and Javascript LinkBoard is used to show different online projects at my school. Feel free to clone it and change the links to reflect your needs.
 
 ## Usage
 
